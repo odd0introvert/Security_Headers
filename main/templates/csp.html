@@ -1,0 +1,556 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-10 h-screen">
+
+    <div class="col-span-6 h-full">
+        <style>
+            input:checked + svg {
+                display: block;
+            }
+            </style>
+            
+            <form action="" method="post" class="">
+            
+                {% csrf_token %}
+            
+                {% if CSP_Output == '1' %}
+            
+                <div class="bg-gray-50 flex items-center justify-center bg-gray-100 pr-5 pl-10 mt-10">
+                    <div class=" bg-white rounded overflow-hidden w-full border">
+                        <div id="header-buttons" class="py-3 px-4 flex">
+                            <div class="rounded-full w-3 h-3 bg-red-500 mr-2"></div>
+                            <div class="rounded-full w-3 h-3 bg-yellow-500 mr-2"></div>
+                            <div class="rounded-full w-3 h-3 bg-green-500"></div>
+                        </div>
+                        <div id="code-area" class="py-10 px-10 mt-1 border">
+                            <div class="mb-2">
+                                <p>Content-Security-Policy{% if CSP_Report_Check == '1' %}-Report-Only{% endif %}: " 
+            
+                                    {% if CSP_Default %} default-src {{CSP_Default}} ; {% endif %}
+                                    {% if CSP_Script %} script-src {{CSP_Script}} ; {% endif %}
+                                    {% if CSP_Style %} object-src {{CSP_Style}} ; {% endif %}
+                                    {% if CSP_Image %} style-src {{CSP_Image}} ; {% endif %}
+                                    {% if CSP_Font %} img-src {{CSP_Font}} ; {% endif %}
+                                    {% if CSP_Connect %} media-src {{CSP_Connect}} ; {% endif %}
+                                    {% if CSP_Media %} frame-src {{CSP_Media}} ; {% endif %}
+                                    {% if CSP_Object %} font-src {{CSP_Object}} ; {% endif %}
+                                    {% if CSP_Frame %} connect-src {{CSP_Frame}} ; {% endif %}
+                                    {% if CSP_Report_URI %} report-uri {{CSP_Report_URI}} {% endif %}
+                                    
+                                "</p>
+                            </div>
+            
+                            <div class="mb-2">
+                                <p>X-Content-Security-Policy{% if CSP_Report_Check == '1' %}-Report-Only{% endif %}: " 
+            
+                                    {% if CSP_Default %} default-src {{CSP_Default}} ; {% endif %}
+                                    {% if CSP_Script %} script-src {{CSP_Script}} ; {% endif %}
+                                    {% if CSP_Style %} object-src {{CSP_Style}} ; {% endif %}
+                                    {% if CSP_Image %} style-src {{CSP_Image}} ; {% endif %}
+                                    {% if CSP_Font %} img-src {{CSP_Font}} ; {% endif %}
+                                    {% if CSP_Connect %} media-src {{CSP_Connect}} ; {% endif %}
+                                    {% if CSP_Media %} frame-src {{CSP_Media}} ; {% endif %}
+                                    {% if CSP_Object %} font-src {{CSP_Object}} ; {% endif %}
+                                    {% if CSP_Frame %} connect-src {{CSP_Frame}} ; {% endif %}
+                                    {% if CSP_Report_URI %} report-uri {{CSP_Report_URI}} {% endif %}
+                                    
+                                "</p>
+                            </div>
+            
+                            <div class="mb-2">
+                                <p>X-WebKit-CSP{% if CSP_Report_Check == '1' %}-Report-Only{% endif %}: " 
+            
+                                    {% if CSP_Default %} default-src {{CSP_Default}} ; {% endif %}
+                                    {% if CSP_Script %} script-src {{CSP_Script}} ; {% endif %}
+                                    {% if CSP_Style %} object-src {{CSP_Style}} ; {% endif %}
+                                    {% if CSP_Image %} style-src {{CSP_Image}} ; {% endif %}
+                                    {% if CSP_Font %} img-src {{CSP_Font}} ; {% endif %}
+                                    {% if CSP_Connect %} media-src {{CSP_Connect}} ; {% endif %}
+                                    {% if CSP_Media %} frame-src {{CSP_Media}} ; {% endif %}
+                                    {% if CSP_Object %} font-src {{CSP_Object}} ; {% endif %}
+                                    {% if CSP_Frame %} connect-src {{CSP_Frame}} ; {% endif %}
+                                    {% if CSP_Report_URI %} report-uri {{CSP_Report_URI}} {% endif %}
+                                    
+                                "</p>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            
+                {% endif %}
+            
+                <div class="flex justify-center items-center pr-5 pl-10 mt-10">
+                    <!--actual component start-->
+                    <div x-data="setup()" class="w-full">
+                        <ul class="flex justify-center items-center my-4 w-full">
+                            <template x-for="(tab, index) in tabs" :key="index">
+                                <li class="cursor-pointer py-2 px-4 text-gray-500 border-b-8"
+                                    :class="activeTab===index ? 'text-indigo-500 border-indigo-500' : ''" @click="activeTab = index"
+                                    x-text="tab"></li>
+                            </template>
+                        </ul>
+                
+                        <div class="w-80 bg-white p-16 text-center mx-auto border w-full text-justify h-full rounded">
+                            <div x-show="activeTab===0">
+            
+                                <p>The default-src directive sets a default source list for all other directives.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Default">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Default-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===1">
+                                <p>The script-src directive restricts which scripts the protected resource can execute. The directive also controls other resources, such as XSLT style sheets [XSLT], which can cause the user agent to execute script.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+                                <p><span class="text-indigo-500" >Inline</span> → Inline html entities, such as &lt;script&gt; alert('Hi ;)') &lt;/script&gt;.</p><br>
+                                <p><span class="text-indigo-500" >Eval</span> → Allow a script to run eval().</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Script">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                    <option value="Inline">
+                                        Inline
+                                    </option>
+                                    <option value="Eval">
+                                        Eval
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Script-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===2">
+                                <p>The style-src directive restricts which styles the user applies to the protected resource.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+                                <p><span class="text-indigo-500" >Inline</span> → Inline html entities, such as &lt;script&gt; alert('Hi ;)') &lt;/script&gt;.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Style">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                    <option value="Inline">
+                                        Inline
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Style-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===3">
+                                <p>The img-src directive restricts from where the protected resource can load images.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Image">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Image-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===4">
+                                <p>The font-src directive restricts from where the protected resource can load fonts. This applies when processing the @font-face CSS rule.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Font">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Font-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===5">
+                                <p>The connect-src directive restricts which URIs the protected resource can load using script interfaces. This applies to the open() method of an XMLHttpRequest Object, the WebSocket constructor and the EventSource constructor.</p>
+            
+                                <br>
+            
+                                <p><spaspan class="text-indigo-500" >None</spaspan> → Deny all access.</p><br>
+                                <p><spaspan class="text-indigo-500" >All</spaspan> → Wildcard access.</p><br>
+                                <p><spaspan class="text-indigo-500" >Self</spaspan> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><spaspan class="text-indigo-500" >Data</spaspan> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Connect">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Connect-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===6">
+                                <p>The media-src directive restricts from where the protected resource can load video and audio. This applies to data for a video or audio clip, such as when processing the src attribute of a video, audio, source, or track elements.</p>
+            
+                                <br>
+            
+                                <p><spaspan class="text-indigo-500" >None</spaspan> → Deny all access.</p><br>
+                                <p><spaspan class="text-indigo-500" >All</spaspan> → Wildcard access.</p><br>
+                                <p><spaspan class="text-indigo-500" >Self</spaspan> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><spaspan class="text-indigo-500" >Data</spaspan> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Media">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Media-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===7">
+                                <p>The object-src directive restricts from where the protected resource can load plugins. This applies to the data attribute of an object element, the src attribute of an embed elements, or the code or archive attributes of an applet element. Data for any object, embed, or applet element must match the allowed object sources in order to be fetched.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Object">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Object-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===8">
+                                <p>The frame-src directive restricts from where the protected resource can embed frames.</p>
+            
+                                <br>
+            
+                                <p><span class="text-indigo-500" >None</span> → Deny all access.</p><br>
+                                <p><span class="text-indigo-500" >All</span> → Wildcard access.</p><br>
+                                <p><span class="text-indigo-500" >Self</span> → URI must have the same scheme, host, and port as the protected resource's URI.</p><br>
+                                <p><span class="text-indigo-500" >Data</span> → Embedded data, such as a base64 encoded image.</p><br>
+            
+                                <br>
+                                
+                                <select class="block bg-gray-100 rounded w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="CSP-Frame">
+                                    <option value="">
+                                        Select an option
+                                    </option>
+                                    <option value="None">
+                                        None
+                                    </option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="Self">
+                                        Self
+                                    </option>
+                                    <option value="Data">
+                                        Data
+                                    </option>
+                                </select>
+            
+                                <br>
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Hosts
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Space separated, * for wildcard subdomains, you can specify just a scheme e.g. https:" name="CSP-Frame-Host">
+                                </div>
+            
+                            </div>
+                            <div x-show="activeTab===9">
+            
+                                <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Report URI
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Must use the same port and protocol as the protected resource" name="CSP-Report-URI">
+                                </div>
+            
+                                <br>
+            
+                                <label class="flex justify-start items-start">
+                                <div class="bg-white border-2 rounded border-gray-400 w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
+                                    <input type="checkbox" class="opacity-0 absolute" name="CSP-Report-Check" value="1">
+                                    <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
+                                </div>
+                                <div class="select-none">Only send reports, don’t restrict access.</div>
+                                </label>
+            
+                            </div>
+                        </div>
+                
+                        
+                    </div>
+                    <!--actual component end-->
+                </div>
+            
+                <br>
+            
+                <div class="flex justify-center items-center">
+                    <button class="bg-indigo-500 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-indigo-100 rounded hover:shadow-lg hover:bg-indigo-600" value="submit">Generate</button>
+                </div>
+            
+                <br>
+            
+            </form>
+            
+            <script>
+                function setup() {
+                return {
+                  activeTab: 0,
+                  tabs: [
+                      "Default",
+                      "Script",
+                      "Style",
+                      "Image",
+                      "Font",
+                      "Connect",
+                      "Media",
+                      "Object",
+                      "Frame",
+                      "Report",
+                  ]
+                };
+              };
+            </script>
+    </div>
+
+    <div class="col-span-4 overflow-y-auto bg-white rounded text-justify m-10 p-10 h-80 md:h-auto border">
+
+        <h1 class="text-2xl font-bold" >Content Security Policy (CSP)</h1>
+
+        <br>
+
+        <p>
+            Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
+            <br><br>CSP is designed to be fully backward compatible (except CSP version 2 where there are some explicitly-mentioned inconsistencies in backward compatibility; more details here section 1.1). Browsers that don't support it still work with servers that implement it, and vice-versa: browsers that don't support CSP ignore it, functioning as usual, defaulting to the standard same-origin policy for web content. If the site doesn't offer the CSP header, browsers likewise use the standard same-origin policy.
+            <br><br>To enable CSP, you need to configure your web server to return the Content-Security-Policy HTTP header. (Sometimes you may see mentions of the X-Content-Security-Policy header, but that's an older version and you don't need to specify it anymore.)
+        </p>
+
+        <br>
+
+        <h1 class="text-2xl font-bold" >Mitigating cross site scripting</h1>
+
+        <br>
+
+        <p>
+            A primary goal of CSP is to mitigate and report XSS attacks. XSS attacks exploit the browser's trust of the content received from the server. Malicious scripts are executed by the victim's browser because the browser trusts the source of the content, even when it's not coming from where it seems to be coming from.
+            <br><br>CSP makes it possible for server administrators to reduce or eliminate the vectors by which XSS can occur by specifying the domains that the browser should consider to be valid sources of executable scripts. A CSP compatible browser will then only execute scripts loaded in source files received from those allowlisted domains, ignoring all other script (including inline scripts and event-handling HTML attributes).
+            <br><br>As an ultimate form of protection, sites that want to never allow scripts to be executed can opt to globally disallow script execution.
+        </p>
+    
+    </div>
+
+</div>
+
+{% endblock  %}

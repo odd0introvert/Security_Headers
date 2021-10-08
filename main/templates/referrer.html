@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-10 h-screen">
+
+    <div class="col-span-6">
+
+        {% if referrer_Output == '1' %}
+            
+        <div class="bg-gray-50 flex items-center justify-center bg-gray-100 pr-10 pl-10 mt-10">
+            <div class=" bg-white rounded overflow-hidden w-full border">
+                <div id="header-buttons" class="py-3 px-4 flex">
+                    <div class="rounded-full w-3 h-3 bg-red-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-yellow-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-green-500"></div>
+                </div>
+                <div id="code-area" class="py-10 px-10 mt-1 border">
+                    <div class="mb-2">
+
+                        <p>Referrer-Policy: {{referrer_Option}}</p><br><br>
+                        <p class="text-gray-500"># Integration with HTML</p><br>
+                        <p>&lt;meta name="referrer" content="{{referrer_Option}}"&gt;</p><br>
+                        <p>&lt;a href="http://example.com" referrerpolicy="{{referrer_Option}}"&gt;&lt;/a&gt;</p><br>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <form action="" method="post" class="bg-white rounded text-justify m-10 p-20 border h-content">
+
+            {% csrf_token %}
+
+            <p>The Referrer-Policy HTTP header governs which referrer information, sent in the Referer header, should be included with requests made.</p>
+
+            <br>
+                
+            <p><span class="text-indigo-500" >no-referrer</span> → The Referer header will be omitted entirely. No referrer information is sent along with requests.</p><br>
+            <p><span class="text-indigo-500" >no-referrer-when-downgrade</span> → This is the user agent’s default behavior if no policy is specified. The origin is sent as referrer to a-priori as-much-secure destination (HTTPS → HTTPS), but isn’t sent to a less secure destination (HTTPS → HTTP).</p><br>
+            <p><span class="text-indigo-500" >origin</span> → Only send the origin of the document as the referrer in all cases. (e.g. the document https://example.com/page.html will send the referrer https://example.com/.)</p><br>
+            <p><span class="text-indigo-500" >origin-when-cross-origin</span> → Send a full URL when performing a same-origin request, but only send the origin of the document for other cases.</p><br>
+            <p><span class="text-indigo-500" >same-origin</span> → A referrer will be sent for same-site origins, but cross-origin requests will contain no referrer information.</p><br>
+            <p><span class="text-indigo-500" >strict-origin</span> → Only send the origin of the document as the referrer to a-priori as-much-secure destination (HTTPS → HTTPS), but don’t send it to a less secure destination (HTTPS → HTTP).</p><br>
+            <p><span class="text-indigo-500" >strict-origin-when-cross-origin</span> → Send a full URL when performing a same-origin request, only send the origin of the document to a-priori as-much-secure destination (HTTPS → HTTPS), and send no header to a less secure destination (HTTPS → HTTP).</p><br>
+            <p><span class="text-indigo-500" >unsafe-url</span> → Send a full URL (stripped from parameters) when performing a a same-origin or cross-origin request.</p><br>
+
+            <br>
+
+            <select class="block bg-gray-100 rounded text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="referrer-option">
+                <option value="0">
+                    Select an option
+                </option>
+                <option value="no-referrer">
+                    no-referrer
+                </option>
+                <option value="no-referrer-when-downgrade">
+                    no-referrer-when-downgrade
+                </option>
+                <option value="origin">
+                    origin
+                </option>
+                <option value="origin-when-cross-origin">
+                    origin-when-cross-origin
+                </option>
+                <option value="same-origin">
+                    same-origin
+                </option>
+                <option value="strict-origin">
+                    strict-origin
+                </option>
+                <option value="strict-origin-when-cross-origin">
+                    strict-origin-when-cross-origin
+                </option>
+                <option value="unsafe-url">
+                    unsafe-url
+                </option>
+            </select>
+
+            <br><br><br>
+            
+            <div class="flex justify-center items-center">
+                <button class="bg-indigo-500 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-indigo-100 rounded hover:shadow-lg hover:bg-indigo-600" value="submit">Generate</button>
+            </div>
+        
+            <br>
+
+        </form>
+    </div>
+
+    <div class="col-span-4 overflow-y-auto bg-white rounded text-justify m-10 p-10 h-80 md:h-auto border">
+
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+        
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+        
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+    
+    </div>
+
+</div>
+
+{% endblock  %}

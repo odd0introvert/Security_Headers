@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="grid grid-cols-1 md:grid-cols-10 h-screen">
+
+    <div class="col-span-6">
+
+        {% if xframe_Output == '1' %}
+            
+        <div class="bg-gray-50 flex items-center justify-center bg-gray-100 pr-10 pl-10 mt-10">
+            <div class=" bg-white rounded overflow-hidden w-full border">
+                <div id="header-buttons" class="py-3 px-4 flex">
+                    <div class="rounded-full w-3 h-3 bg-red-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-yellow-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-green-500"></div>
+                </div>
+                <div id="code-area" class="py-10 px-10 mt-1 border">
+                    <div class="mb-2">
+
+                        {% if xframe_Conf == 'Apache' %}
+                        <p class="text-gray-400"># To configure Apache to send the X-Frame-Options header for all pages,</p>
+                        <p>Header always set X-Frame-Options "{{xframe_Option}}" </p>
+                        <p class="text-gray-400"># To configure Apache to set the X-Frame-Options,</p>
+                        <p>Header set X-Frame-Options "{{xframe_Option}}" </p>
+                        {% endif %}
+
+                        {% if xframe_Conf == 'Nginx' %}
+                        <p class="text-gray-400"># To configure nginx to send the X-Frame-Options header, add this either to your http, server or location configuration,</p>
+                        <p>add_header X-Frame-Options {{xframe_Option}} always;</p>
+                        {% endif %}
+
+                        {% if xframe_Conf == 'IIS' %}
+                        <p class="text-gray-400"># To configure IIS to send the X-Frame-Options header, add this to your site's Web.config file,</p>
+                        <p>
+                            &lt;system.webServer&gt;<br>
+                            ...<br>
+                            <br>
+                            &lt;httpProtocol&gt;<br>
+                            &lt;customHeaders&gt;<br>
+                            &lt;add name="X-Frame-Options" value="{{xframe_Option}}" / &gt;<br>
+                            &lt;/customHeaders&gt;<br>
+                            &lt;/httpProtocol&gt;<br>
+                            <br>
+                            ...<br>
+                            &lt;/system.webServer&gt;
+                        </p>
+                        {% endif %}
+
+                        {% if xframe_Conf == 'HAProxy' %}
+                        <p class="text-gray-400"># To configure HAProxy to send the X-Frame-Options header, add this to your front-end, listen, or backend configuration,</p>
+                        <p>rspadd X-Frame-Options:\ {{xframe_Option}}</p>
+                        <p class="text-gray-400"># Alternatively, in newer versions,</p>
+                        <p>http-response set-header X-Frame-Options {{xframe_Option}}</p>
+                        {% endif %}
+
+                        {% if xframe_Conf == 'Express' %}
+                        <p class="text-gray-400"># To configure Express to send the X-Frame-Options header, you can use helmet which uses frameguard to set the header. Add this to your server configuration,</p>
+                        <p>
+                            const helmet = require('helmet');<br>
+                            const app = express();<br>
+                            app.use(helmet.frameguard({ action: '{{xframe_Option}}' }));
+                        </p>
+                        <p class="text-gray-400"># Alternatively, you can use frameguard directly,</p>
+                        <p>
+                            const frameguard = require('frameguard')<br>
+                            app.use(frameguard({ action: '{{xframe_Option}}' }))
+                        </p>
+                        {% endif %}
+
+                        {% if xframe_Conf == '0' %}
+
+                        <p>Please select a Server !</p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <form action="" method="post" class="bg-white rounded text-justify m-10 p-20 border h-content">
+
+            {% csrf_token %}
+
+            <p>The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt;. Sites can use this to avoid click-jacking attacks, by ensuring that their content is not embedded into other sites.</p>
+
+            <br>
+                
+            <p><span class="text-indigo-500" >Deny</span> → The page cannot be displayed in a frame, regardless of the site attempting to do so.</p><br>
+            <p><span class="text-indigo-500" >Same Origin</span> → The page can only be displayed in a frame on the same origin as the page itself.</p><br>
+
+            <br>
+            
+            <div class="flex items-center">
+                <label class="inline-flex items-center">
+                    <input type="radio"class="h-5 w-5 text-red-600" name="x-frame-option" value="1"/>
+                    <span class="ml-2 text-gray-700">
+                        Deny
+                    </span>
+                </label>
+            </div>
+            <br>
+            <div class="flex items-center">
+                <label class="inline-flex items-center">
+                    <input type="radio" class="h-5 w-5 text-red-600" name="x-frame-option" value="2"/>
+                    <span class="ml-2 text-gray-700">
+                        Same Origin
+                    </span>
+                </label>
+            </div>
+
+            <br>
+
+            <select class="block bg-gray-100 rounded text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="x-frame-conf">
+                <option value="0">
+                    Select an option
+                </option>
+                <option value="Apache">
+                    Apache
+                </option>
+                <option value="Nginx">
+                    Nginx
+                </option>
+                <option value="IIS">
+                    IIS
+                </option>
+                <option value="HAProxy">
+                    HAProxy
+                </option>
+                <option value="Express">
+                    Express
+                </option>
+            </select>
+
+            <br><br><br>
+            
+            <div class="flex justify-center items-center">
+                <button class="bg-indigo-500 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-indigo-100 rounded hover:shadow-lg hover:bg-indigo-600" value="submit">Generate</button>
+            </div>
+        
+            <br>
+
+        </form>
+    </div>
+
+    <div class="col-span-4 overflow-y-auto bg-white rounded text-justify m-10 p-10 h-80 md:h-auto border">
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+            <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+            
+            <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+    </div>
+
+</div>
+
+{% endblock  %}

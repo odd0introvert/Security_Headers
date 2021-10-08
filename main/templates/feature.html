@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="grid grid-cols-1 md:grid-cols-10 h-screen">
+
+    <div class="col-span-6">
+
+        {% if feature_Output == '1' %}
+            
+        <div class="bg-gray-50 flex items-center justify-center bg-gray-100 pr-10 pl-10 mt-10">
+            <div class=" bg-white rounded overflow-hidden w-full border">
+                <div id="header-buttons" class="py-3 px-4 flex">
+                    <div class="rounded-full w-3 h-3 bg-red-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-yellow-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-green-500"></div>
+                </div>
+                <div id="code-area" class="py-10 px-10 mt-1 border">
+                    <div class="mb-2">
+
+                        <p>Feature-Policy: {{feature_Option_1}} '{{feature_Option_2}}'</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <form action="" method="post" class="bg-white rounded text-justify m-10 p-20 border h-content">
+
+            {% csrf_token %}
+
+            <p>The Feature-Policy header is an experimental feature that allows developers to selectively enable and disable use of various browser features and APIs.</p>
+
+            <br>
+                
+            <p><span class="text-indigo-500" >accelerometer</span> → Controls access to accelerometer sensors on the device.</p><br>
+            <p><span class="text-indigo-500" >ambient-light-sensor</span> → Controls access to ambient light sensors on the device.</p><br>
+            <p><span class="text-indigo-500" >autoplay</span> → Controls access to autoplay through play() and the autoplay attribute.</p><br>
+            <p><span class="text-indigo-500" >battery</span> → Controls access to the BatteryManager API.</p><br>
+            <p><span class="text-indigo-500" >camera</span> → Controls access to video input devices.</p><br>
+            <p><span class="text-indigo-500" >display-capture</span> → Controls access to capturing the display output.</p><br>
+            <p><span class="text-indigo-500" >document-domain</span> → Controls access to setting document.domain.</p><br>
+            <p><span class="text-indigo-500" >encrypted-media</span> → Controls whether requestMediaKeySystemAccess() is allowed.</p><br>
+            <p><span class="text-indigo-500" >fullscreen</span> → Controls whether requestFullscreen() is allowed.</p><br>
+            <p><span class="text-indigo-500" >geolocation</span> → Controls access to the Geolocation interface.</p><br>
+            <p><span class="text-indigo-500" >gyroscope</span> → Controls access to gyroscope sensors on the device.</p><br>
+            <p><span class="text-indigo-500" >magnetometer</span> → Controls access to magnetometer sensors on the device.</p><br>
+            <p><span class="text-indigo-500" >microphone</span> → Controls access to audio input devices.</p><br>
+            <p><span class="text-indigo-500" >midi</span> → Controls access to requestMIDIAccess() method.</p><br>
+            <p><span class="text-indigo-500" >navigation-override</span> → Controls access to override of the spatial navigation API.</p><br>
+            <p><span class="text-indigo-500" >payment</span> → Controls access to the PaymentRequest interface.</p><br>
+            <p><span class="text-indigo-500" >picture-in-picture</span> → Controls access to picture-in-picture.</p><br>
+            <p><span class="text-indigo-500" >speaker</span> → Controls access to audio output devices.</p><br>
+            <p><span class="text-indigo-500" >usb</span> → Controls access to USB devices.</p><br>
+            <p><span class="text-indigo-500" >vibrate (deprecated)</span> → Controls access to the vibrate() method.</p><br>
+            <p><span class="text-indigo-500" >vr (deprecated)</span> → Controls access to VR displays.</p><br>
+
+            <br>
+
+            <select class="block bg-gray-100 rounded text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="feature-option-1">
+                <option value="0">
+                    Select directive
+                </option>
+                <option value="accelerometer">
+                    accelerometer
+                </option>
+                <option value="ambient-light-sensor">
+                    ambient-light-sensor
+                </option>
+                <option value="autoplay">
+                    autoplay
+                </option>
+                <option value="battery">
+                    battery
+                </option>
+                <option value="camera">
+                    camera
+                </option>
+                <option value="display-capture">
+                    display-capture
+                </option>
+                <option value="document-domain">
+                    document-domain
+                </option>
+                <option value="encrypted-media">
+                    encrypted-media
+                </option>
+                <option value="fullscreen">
+                    fullscreen
+                </option>
+                <option value="geolocation">
+                    geolocation
+                </option>
+                <option value="gyroscope">
+                    gyroscope
+                </option>
+                <option value="magnetometer">
+                    magnetometer
+                </option>
+                <option value="microphone">
+                    microphone
+                </option>
+                <option value="midi">
+                    midi
+                </option>
+                <option value="navigation-override">
+                    navigation-override
+                </option>
+                <option value="payment">
+                    payment
+                </option>
+                <option value="picture-in-picture">
+                    picture-in-picture
+                </option>
+                <option value="usb">
+                    usb
+                </option>
+                <option value="vibrate">
+                    vibrate
+                </option>
+                <option value="vr">
+                    vr
+                </option>
+            </select>
+
+            <br>
+
+            <select class="block bg-gray-100 rounded text-gray-700 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="feature-option-2">
+                <option value="0">
+                    Select allowlist
+                </option>
+                <option value="*">
+                    *
+                </option>
+                <option value="self">
+                    self
+                </option>
+                <option value="src">
+                    src
+                </option>
+                <option value="none">
+                    none
+                </option>
+            </select>
+
+            <br><br><br>
+            
+            <div class="flex justify-center items-center">
+                <button class="bg-indigo-500 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-indigo-100 rounded hover:shadow-lg hover:bg-indigo-600" value="submit">Generate</button>
+            </div>
+        
+            <br>
+
+        </form>
+    </div>
+
+    <div class="col-span-4 overflow-y-auto bg-white rounded text-justify m-10 p-10 h-80 md:h-auto border">
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+            <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+            
+            <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+    </div>
+
+</div>
+
+{% endblock  %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-10 h-screen">
+
+    <div class="col-span-6">
+
+        {% if hsts_Output == '1' %}
+            
+        <div class="bg-gray-50 flex items-center justify-center bg-gray-100 pr-10 pl-10 mt-10">
+            <div class=" bg-white rounded overflow-hidden w-full border">
+                <div id="header-buttons" class="py-3 px-4 flex">
+                    <div class="rounded-full w-3 h-3 bg-red-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-yellow-500 mr-2"></div>
+                    <div class="rounded-full w-3 h-3 bg-green-500"></div>
+                </div>
+                <div id="code-area" class="py-10 px-10 mt-1 border">
+                    <div class="mb-2">
+
+                        <p>Strict-Transport-Security: max-age={{hsts_max_age}}{% if hsts_includeSubDomains == '1' %}; includeSubDomains{% endif %}{% if hsts_preload == '1' %}; preload{% endif %}</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <form action="" method="post" class="bg-white rounded text-justify m-10 p-20 border h-content">
+
+            {% csrf_token %}
+
+            <p>HTTP Strict Transport Security (also named HSTS) is a web security policy mechanism which helps to protect websites against protocol downgrade attacks and cookie hijacking. It allows web servers to declare that web browsers (or other complying user agents) should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol.</p>
+
+            <br>
+                
+            <p><span class="text-indigo-500" >max-age=SECONDS</span> → The time, in seconds, that the browser should remember that this site is only to be accessed using HTTPS.</p><br>
+            <p><span class="text-indigo-500" >includeSubDomains</span> → If this optional parameter is specified, this rule applies to all of the site’s subdomains as well.</p><br>
+            <p><span class="text-indigo-500" >preload</span> → Google maintains an HSTS preload service. By following the guidelines and successfully submitting your domain, browsers will never connect to your domain using an insecure connection.</p><br>
+            
+            <br>
+
+            <div class="w-full">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                max-age
+            </label>
+            <input class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="Enter the max age" name="hsts-max-age">
+            </div>
+
+            <br>
+            
+            <div class="flex items-center">
+                <label class="inline-flex items-center">
+                    <input type="checkbox"class="h-5 w-5 text-red-600" name="hsts-includeSubDomains" value="1"/>
+                    <span class="ml-2 text-gray-700">
+                        includeSubDomains
+                    </span>
+                </label>
+            </div>
+            <br>
+            <div class="flex items-center">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="h-5 w-5 text-red-600" name="hsts-preload" value="1"/>
+                    <span class="ml-2 text-gray-700">
+                        preload
+                    </span>
+                </label>
+            </div>
+
+            <br><br><br>
+            
+            <div class="flex justify-center items-center">
+                <button class="bg-indigo-500 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-indigo-100 rounded hover:shadow-lg hover:bg-indigo-600" value="submit">Generate</button>
+            </div>
+        
+            <br>
+
+        </form>
+    </div>
+
+    <div class="col-span-4 overflow-y-auto bg-white rounded text-justify m-10 p-10 h-80 md:h-auto border">
+
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+        
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+                
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+        
+        <p>A week ago a friend invited a couple of other couples over for dinner. Eventually, the food (but not the wine) was cleared off the table for what turned out to be some fierce Scrabbling. Heeding the strategy of going for the shorter, more valuable word over the longer cheaper word, our final play was “Bon,” which–as luck would have it!–happens to be a Japanese Buddhist festival, and not, as I had originally asserted while laying the tiles on the board, one half of a chocolate-covered cherry treat. Anyway, the strategy worked. My team only lost by 53 points instead of 58.</p>
+    
+    </div>
+
+</div>
+
+{% endblock  %}
